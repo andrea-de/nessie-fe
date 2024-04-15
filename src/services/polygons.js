@@ -20,7 +20,6 @@ export const getPolygons = async () => {
 };
 
 export const createPolygon = async (polygon) => {
-    console.log('polygon: ', polygon);
     const response = await fetch(`${REACT_APP_BACKEND_URL}/api/polygon/create`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

@@ -15,51 +15,21 @@ const Map = () => {
     const [drawnPolygons, setDrawnPolygons] = useState([]); // Mapbox features
     const [map, setMap] = useState(null); // Mapbox map
     const [draw, setDraw] = useState(null); // Mapbox draw
-    
+
     const [pending, setPending] = useState(null); // Mapbox draw
 
     const createPolygon = (e, p) => {
-        let newPolygon = e.features[0];
-        console.log(newPolygon);
-        setPending(e.features[0]);
-
-        // console.log('newPolygon: ', newPolygon);
-        // newPolygon = Object.assign({}, selectedPolygon, { coordinates: newPolygon.geometry.coordinates[0] });
-        // console.log('selectedPolygon: ', selectedPolygon);
-        // console.log('newPolygon: ', newPolygon);
-        // setSelectedPolygon(newPolygon);
-
-
-        // setSelectedPolygon({
-        //     ...selectedPolygon,
-        //     coordinates: newPolygon.properties.coordinates, 
-        // })
-
-        // setPolygons((prevPolygons) => [...prevPolygons, newPolygon]);
-
-        // const polygonName = document.getElementById('polygonName').value;
-        // const polygonStatus = document.getElementById('polygonStatus').value;
-        // newPolygon.properties = {
-        //     ...newPolygon.properties, // Keep any existing properties
-        //     name: polygonName,
-        //     status: polygonStatus
-        // }
-        // savePolygon(newPolygon);
+        setSelectedPolygon({
+            ...selectedPolygon,
+            coordinates: e.features[0].geometry.coordinates[0]
+        });
     }
 
     const updateFeature = (e) => {
-        console.log('mapbox feature updatung');
-
-        // const updatedPolygon = e.features[0];
-        // console.log(updatedPolygon);
-
-        // setPolygons((prev) => {
-        //     return prev.map((poly) =>
-        //         poly.properties.id === updatedPolygon.properties.id ? updatedPolygon : poly
-        //     );
-        // });
-        // console.log(drawnPolygons)
-        // savePolygon(updatedPolygon);
+        setSelectedPolygon({
+            ...selectedPolygon,
+            coordinates: e.features[0].geometry.coordinates[0]
+        });
     };
 
     useEffect(() => {
@@ -79,20 +49,16 @@ const Map = () => {
             ]
         });
 
-        // map.on('draw.render', (e)=>{
-        //     console.log(e);
-        // });
-
-        map.on('draw.create', (e) => setPending(e.features[0]));
+        map.on('draw.create', updateFeature);
         map.on('draw.update', updateFeature);
 
-        map.on('draw.modechange', (e)=>{
+        map.on('draw.modechange', (e) => {
             // console.log('e.mode: ', e.mode);
             // if (e.mode == 'simple_select') {
-                // setDrawingMode(false);
+            // setDrawingMode(false);
             // }
         });
-        
+
         map.on('draw.selectionchange', (e) => {
             // Check Permission and remove selection
             // setDrawingMode(false);
@@ -188,17 +154,17 @@ const Map = () => {
     }, [selectedPolygonID]);
 
     // useEffect(() => {
-        // if (draw) {
-        //     if (JSON.stringify(selectedPolygon) === '{}') {
-        //         console.log('hit');
-        //         draw.changeMode('simple_select');
-        //     }
-        //     else {
-        //         draw.changeMode('simple_select');
-        //     }
-        // }
+    // if (draw) {
+    //     if (JSON.stringify(selectedPolygon) === '{}') {
+    //         console.log('hit');
+    //         draw.changeMode('simple_select');
+    //     }
+    //     else {
+    //         draw.changeMode('simple_select');
+    //     }
+    // }
     // }, [drawingMode, selectedPolygon, selectedPolygonID, draw]);
-    
+
     // On drawing mode change
     useEffect(() => {
         if (draw) {

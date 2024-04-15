@@ -1,6 +1,8 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { getPolygons } from './services/polygons';
 
+const DEBUG = process.env.REACT_APP_DEBUG == 'TRUE' ?? false;
+
 const Context = createContext({
     user: null,
     setUser: () => { },
@@ -22,27 +24,31 @@ const Context = createContext({
 
 const Provider = ({ children }) => {
     const [user, setUser] = useState(null);
-    // const [user, setUser] = useState({email: "donnie@element.com", role: "authorized", id: 1});
     const [jwt, setJwt] = useState(null);
     const [polygons, setPolygons] = useState([]);
     const [selectedPolygonID, setSelectedPolygonID] = useState(null);
-    const [selectedPolygon, setSelectedPolygon] = useState({});
+    const [selectedPolygon, setSelectedPolygon] = useState(null);
     const [drawingMode, setDrawingMode] = useState(false);
     const [showAuthForm, setShowAuthForm] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    useEffect(() => {
-        const fetchMapData = async () => {
-            try {
-                const data = await getPolygons();
-                setPolygons(data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
+    const fetchMapData = async () => {
+        try {
+            const data = await getPolygons();
+            setPolygons(data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
 
-        fetchMapData();
-    }, []);
+    useEffect(() => {
+        if (DEBUG) setUser({ email: "donnie@element.com", role: "authorized", id: 1 })
+    }, [])
+
+    // A selection can be a creation or edit. Refresh polygons after selection
+    useEffect(() => {
+        if (selectedPolygon == null) fetchMapData();
+    }, [selectedPolygon]);
 
     return (
         <Context.Provider value={{

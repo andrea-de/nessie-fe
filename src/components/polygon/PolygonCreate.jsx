@@ -3,8 +3,10 @@ import { Context } from '../../Context.js';
 import './PolygonCreate.css';
 import { createPolygon } from '../../services/polygons';
 
+const DEBUG = process.env.REACT_APP_DEBUG == 'TRUE' ?? false;
+
 const PolygonCreate = ({ onClose }) => {
-    const { drawingMode, setDrawingMode, selectedPolygon, setSelectedPolygon } = useContext(Context);
+    const { drawingMode, setDrawingMode, selectedPolygon, setSelectedPolygon, user } = useContext(Context);
 
     const [name, setName] = useState('');
     const [note, setNote] = useState('');
@@ -13,26 +15,26 @@ const PolygonCreate = ({ onClose }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // console.log('newPolygon: ', newPolygon);
-        // return;
         const response = await createPolygon(newPolygon);
         if (!response.ok) setError((await response.json()).error);
-        else onClose();
+        else {
+            setSelectedPolygon(null)
+            onClose();
+        }
     };
 
     useEffect(() => {
         const newPolygon = {
             name: name,
             notes: note,
-            // coordinates: [
-            //     [-4.933594281824213, 57.27963203762246],
-            //     [-4.824676650782067, 57.257915746433014],
-            //     [-4.845098706602954, 57.29287636616823],
-            //     [-4.933594281824213, 57.27963203762246]
-            // ]
-            // created_by: 
+            created_by: user.id ?? '',
         }
         setNewPolygon(newPolygon);
+        if (DEBUG) {
+            setName('Test sighting');
+            setNote('This is nothing');
+        }
+    
     }, []);
 
     useEffect(() => {
@@ -46,29 +48,12 @@ const PolygonCreate = ({ onClose }) => {
 
     useEffect(() => {
         if (!newPolygon || !selectedPolygon) return;
-        console.log('selectedPolygon.coordinates: ', selectedPolygon.coordinates);
-        const polygon = newPolygon
-        polygon.coordinates = selectedPolygon.coordinates;
-        setNewPolygon(polygon)
-
+        setNewPolygon({ ...newPolygon, coordinates: selectedPolygon.coordinates });
     }, [selectedPolygon])
-
-    useEffect(() => {
-        console.log('newPolygon: ', newPolygon);
-    }, [newPolygon])
 
     return (
         <form className="polygonCreate" onSubmit={handleSubmit}>
-            <p>
-                {/* {selectedPolygon && JSON.stringify(selectedPolygon) != '{}'( */}
-                {false && (
-                    <>
-                        {newPolygon.name ?? ''}
-                        {newPolygon.notes ?? ''}
-                        {newPolygon.coordinates ?? ''}
-                    </>
-                )}
-            </p>
+            {DEBUG && newPolygon && (<>{JSON.stringify(newPolygon)}</>)}
             <h2>
                 New Sighting
             </h2>
@@ -92,7 +77,9 @@ const PolygonCreate = ({ onClose }) => {
                 {newPolygon && !newPolygon.coordinates && !drawingMode && (
                     <button type="button" className="draw" onClick={() => setDrawingMode(true)}>Draw</button>
                 )}
-                <button type="submit" disabled={!newPolygon}>Save</button>
+                <button type="submit" disabled={
+                    (!newPolygon || !newPolygon.coordinates || !newPolygon.name || !newPolygon.notes)
+                }>Save</button>
             </div>
         </form>
     );
