@@ -1,70 +1,60 @@
-# Getting Started with Create React App
+# Mapbox User and Polygon Frontend (React)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This React application provides a user-friendly interface for interacting with a Mapbox map, drawing and visualizing polygons, and user management.
 
-## Available Scripts
+This Application Depends on the Backend and Database configuration described [here](https://github.com/andrea-de/nessie-be)
 
-In the project directory, you can run:
+### Key Features
 
-### `npm start`
+#### User Management:
+- User registration and login forms.
+- Stores and handles JWT tokens for API authentication.
+- UI for Polygon Data:
+    - Display the name, notes, and status of a selected polygon.
+    - Controls to change the status or delete a polygon (if authorized).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+#### Mapbox Integration:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Renders a Mapbox map
+- Loads polygon data from the backend API.
+- Displays polygons on the map.
 
-### `npm test`
+- Utilize Mapbox Draw for users to create new polygons.
+- Allow select of existing polygons for editing.
+- Send updated coordinates and metadata to the backend.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Requirements
 
-### `npm run build`
+1. Mapbox access token.
+    - REACT_APP_MAPBOX_TOKEN
+    - REACT_APP_BACKEND_URL
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Supabase Database
+    - [Schemas]()
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. Running [Backend service](https://github.com/andrea-de/nessie-be)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Usage
 
-### `npm run eject`
+1. Public
+    - Navigate map
+    - See information about drawn polygons
+    - Register new user
+    - Log in
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. Normal User
+    - Public (See Above)
+    - Create polygon
+    - Edit previous created polygon  in active state
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. Superuser
+    - Normal User (See Above)
+    - Edit polygon 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Additional Notes
+Link to [Node Backend](https://github.com/andrea-de/nessie-be) 
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### TODO
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Implement input validation.
+Consider a state management library (e.g., Redux) for larger applications.
