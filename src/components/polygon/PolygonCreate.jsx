@@ -6,8 +6,8 @@ import { createPolygon } from '../../services/polygons';
 const PolygonCreate = ({ onClose }) => {
     const { drawingMode, setDrawingMode, selectedPolygon, setSelectedPolygon } = useContext(Context);
 
-    const [name, setName] = useState('a');
-    const [note, setNote] = useState('b');
+    const [name, setName] = useState('');
+    const [note, setNote] = useState('');
     const [error, setError] = useState(null); // Error message to display
     const [newPolygon, setNewPolygon] = useState(null);
 
@@ -61,7 +61,7 @@ const PolygonCreate = ({ onClose }) => {
         <form className="polygonCreate" onSubmit={handleSubmit}>
             <p>
                 {/* {selectedPolygon && JSON.stringify(selectedPolygon) != '{}'( */}
-                {newPolygon && (
+                {false && (
                     <>
                         {newPolygon.name ?? ''}
                         {newPolygon.notes ?? ''}

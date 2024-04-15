@@ -3,7 +3,7 @@ import { Context } from '../../Context';
 import './Polygons.css';
 
 const Polygons = () => {
-    const { polygons, selectedPolygonID, setSelectedPolygonID } = useContext(Context);
+    const { polygons, selectedPolygonID, setSelectedPolygonID, user } = useContext(Context);
 
     const handlePolygonClick = (polygonId) => {
         if (selectedPolygonID === polygonId) {
@@ -22,10 +22,12 @@ const Polygons = () => {
                         <li
                             key={index}
                             data-polygon-id={polygon.id}
-                            onClick={() => handlePolygonClick(polygon.id)}
                             className={polygon.status}
                         >
-                            <div className="polygonItem">
+                            <div
+                                className="polygonItem"
+                                onClick={() => handlePolygonClick(polygon.id)}
+                            >
                                 <span>{polygon.name}</span>
                             </div>
                             {selectedPolygonID && selectedPolygonID === polygon.id && (
@@ -33,8 +35,8 @@ const Polygons = () => {
                                     <hr />
                                     <div><span>Status:</span> <span>{polygon.status}</span></div>
                                     <div><span>Notes:</span> <p className='notes'>{polygon.notes}</p></div>
-                                    {true && (
-                                        <form className="polygonEdit" onSubmit={()=>{}}>
+                                    {user && user.role === 'authorized' && (
+                                        <form className="polygonEdit" onSubmit={() => { }}>
                                             <hr />
                                             <h4>Authorized Edit</h4>
                                             <div>
@@ -42,16 +44,17 @@ const Polygons = () => {
                                                 <textarea
                                                     id="note"
                                                     value={''}
-                                                    onChange={(e) => {}}
+                                                    onClick={(e) => { e.preventDefault() }}
+                                                    onChange={(e) => { }}
                                                 />
                                             </div>
                                             <div className="editStatus">
                                                 <div>
                                                     <label htmlFor="status">Status:</label>
                                                     <select name="status" id="status">
-                                                        <option value="active">Volvo</option>
-                                                        <option value="investigating">Saab</option>
-                                                        <option value="archived">Mercedes</option>
+                                                        <option value="active">Active</option>
+                                                        <option value="investigating">Investigating</option>
+                                                        <option value="archived">Archived</option>
                                                     </select>
                                                 </div>
                                                 <button type="submit">Submit</button>

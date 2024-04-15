@@ -22,6 +22,7 @@ const Context = createContext({
 
 const Provider = ({ children }) => {
     const [user, setUser] = useState(null);
+    // const [user, setUser] = useState({email: "donnie@element.com", role: "authorized", id: 1});
     const [jwt, setJwt] = useState(null);
     const [polygons, setPolygons] = useState([]);
     const [selectedPolygonID, setSelectedPolygonID] = useState(null);

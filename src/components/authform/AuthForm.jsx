@@ -7,8 +7,10 @@ const AuthForm = ({ onClose }) => {
     const { showAuthForm, setShowAuthForm, setUser, setJwt } = useContext(Context);
 
     const [isSignUpMode, setIsSignUpMode] = useState(false);
-    const [email, setEmail] = useState('auth@aol.com');
-    const [password, setPassword] = useState('auth123');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    // const [email, setEmail] = useState('auth@aol.com');
+    // const [password, setPassword] = useState('auth123');
     const [isAdmin, setIsAdmin] = useState(false); // Superuser priviledges for editing polygons' data
     const [error, setError] = useState(null); // Error message to display
     const [signedUp, setSignedUp] = useState(false); // Success message to display
@@ -54,7 +56,7 @@ const AuthForm = ({ onClose }) => {
                     const body = await response.json();
                     setUser({
                         email: body.email,
-                        role: body.authorized,
+                        role: body.role,
                         id: body.id
                     })
                     setJwt(body.jwt)

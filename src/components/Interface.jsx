@@ -14,8 +14,6 @@ const Interface = () => {
     const divRef = useRef(null);
 
     const create = () => {
-        setShowCreateForm(true)
-        return
         if (user != null) {
             setShowCreateForm(true)
         } else {
