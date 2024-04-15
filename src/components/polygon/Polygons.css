@@ -1,0 +1,94 @@
+.sightings {
+    margin-inline: 20px;
+}
+
+.sightings ul {
+    margin: 0;
+    padding: 0;
+}
+
+.sightings li {
+    list-style: none;
+    cursor: pointer;
+    margin-block: 10px;
+    padding-inline: 15px;
+    padding-block: 10px;
+    width: 100%;
+    max-width: 350px;
+    background-color: rgb(219, 241, 250);
+    border-radius: 8px;
+}
+
+.sightings li.active {
+    background-color: skyblue
+}
+
+.sightings li.investigating {
+    background-color: cornflowerblue
+}
+
+.sightings li.archived {
+    background-color: lightsteelblue
+}
+
+.sightings li:hover {
+    filter: contrast(80%);
+}
+
+
+.polygonItem {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    font-size: larger;
+}
+
+.expanded div span:nth-of-type(1) {
+    font-weight: bold;
+}
+
+.notes {
+    padding-left: 10px;
+}
+
+/* status */
+.expanded div:nth-of-type(1) {
+    display: flex;
+    width: 100%;
+    /* background-color: red; */
+    justify-content: space-between;
+    align-items: center;
+}
+
+.expanded div:nth-of-type(1) span:nth-of-type(2) {
+    font-size: larger;
+    font-weight: bold;
+    font-variant: small-caps;
+}
+
+
+.expanded div {
+    margin-block: 10px;
+}
+
+.expanded div:first-child {
+    /* text-emphasis: bold; */
+}
+
+.expanded p {
+    margin-block: 5px;
+}
+
+form.polygonEdit {
+    margin: 0;
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+}
+
+.editStatus {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}

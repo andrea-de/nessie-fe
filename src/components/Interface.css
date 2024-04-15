@@ -1,0 +1,12 @@
+.interface {
+    display: flex;
+    flex-direction: column;
+    width: 450px;
+    overflow-y: auto;
+    background-color: rgb(219, 241, 250);
+}
+
+button {
+    width: fit-content;
+    margin: 20px;
+}

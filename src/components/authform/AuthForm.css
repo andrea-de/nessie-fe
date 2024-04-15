@@ -1,0 +1,58 @@
+.authForm .formCancel {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.authForm .formCancel button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  margin: 0;
+  padding: 10px;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: red;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.authForm .isAdmin {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+}
+
+.authForm .isAdmin input {
+  width: fit-content;
+}
+
+.authForm .success {
+  color: green;
+  margin-top: 10px;
+  text-emphasis: bold;
+}
+
+.authForm .error {
+  color: red;
+  margin-top: 10px;
+  text-emphasis: bold;
+}
+
+.authForm .shake {
+  animation: shake 0.5s; /* Adjust duration as needed */
+  animation-iteration-count: 1; /* Adjust shake repetitions */
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  20% { transform: translate(-2px, 0px) rotate(1deg); }
+  40% { transform: translate(2px, 2px) rotate(0deg); }
+  60% { transform: translate(-2px, 1px) rotate(-1deg); }
+  80% { transform: translate(2px, 1px) rotate(0deg); }
+  100% { transform: translate(1px, -1px) rotate(1deg); }
+}
