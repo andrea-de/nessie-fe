@@ -1,0 +1,8 @@
+body.dark-mode main {
+    background-color: rgb(9, 50, 66);
+    color: #fff;
+}
+
+body.dark-mode ul {
+    color: black;
+}

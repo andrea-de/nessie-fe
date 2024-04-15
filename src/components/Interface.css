@@ -3,7 +3,6 @@
     flex-direction: column;
     width: 450px;
     overflow-y: auto;
-    background-color: rgb(219, 241, 250);
 }
 
 button {

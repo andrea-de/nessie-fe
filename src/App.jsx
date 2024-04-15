@@ -4,6 +4,7 @@ import Map from './components/map/Map';
 import Header from './components/header/Header';
 import Interface from './components/Interface';
 import './App.css';
+import './dark.css';
 
 function App() {
   return (

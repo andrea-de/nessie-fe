@@ -37,14 +37,16 @@
     position: absolute;
     top: 65px;
     right: 35px;
-    background-color: rgb(219, 241, 250);
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16), 0px -3px 6px rgba(0, 0, 0, 0.16);
     min-width: 150px;
     border-radius: 5px;
     z-index: 99;
-    padding: 10px;
+    /* padding: 10px; */
     padding-top: 15px;
-    padding-bottom: 0px;
+    padding-bottom: 20px;
+    background-color: #f8f8f8;
+    color: black;
+    text-align: center;
 }
 
 .dropdownContainer.active {
@@ -52,10 +54,10 @@
 }
 
 .dropdown-item {
-    padding: 10px;
+    padding-block: 10px;
     cursor: pointer;
 }
 
 .dropdown-item:hover {
-    background-color: lightgray;
+    filter: saturate(80%);
 }
