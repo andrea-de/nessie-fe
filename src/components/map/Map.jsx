@@ -6,6 +6,8 @@ import { Context } from '../../Context.js';
 import './Map.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
+const REACT_APP_MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_TOKEN;
+
 const Map = () => {
 
     const { polygons, setPolygons, selectedPolygonID, setSelectedPolygonID, selectedPolygon, setSelectedPolygon, drawingMode, setDrawingMode } = useContext(Context);
@@ -61,7 +63,7 @@ const Map = () => {
     };
 
     useEffect(() => {
-        mapboxgl.accessToken = 'pk.eyJ1IjoiYW5keS1sYXN0bmFtZSIsImEiOiJjbHVrNXFveXgwN3ZkMmtsdzN0N28wd2RmIn0.P9nL-hLK5NMb_glwBv-70Q';
+        mapboxgl.accessToken = REACT_APP_MAPBOX_TOKEN
 
         const map = new mapboxgl.Map({
             container: 'map',
