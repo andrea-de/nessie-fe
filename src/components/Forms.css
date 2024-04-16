@@ -58,7 +58,7 @@ button[type="submit"] {
 }
 
 button:disabled {
-    background-color: lightslategray;
+    background-color: lightslategray !important;
     cursor: not-allowed;
 }
 

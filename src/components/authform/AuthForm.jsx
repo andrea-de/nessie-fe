@@ -9,8 +9,6 @@ const AuthForm = ({ onClose }) => {
     const [isSignUpMode, setIsSignUpMode] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    // const [email, setEmail] = useState('auth@aol.com');
-    // const [password, setPassword] = useState('auth123');
     const [isAdmin, setIsAdmin] = useState(false); // Superuser priviledges for editing polygons' data
     const [error, setError] = useState(null); // Error message to display
     const [signedUp, setSignedUp] = useState(false); // Success message to display
@@ -42,7 +40,6 @@ const AuthForm = ({ onClose }) => {
         setSignedUp(null);
         try {
             if (isSignUpMode) {
-                console.log('isAdmin: ', isAdmin);
                 const response = await signup(email, password, isAdmin);
                 if (!response.ok) setCheckError((await response.json()).error);
                 else {

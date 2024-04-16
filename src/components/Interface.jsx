@@ -27,9 +27,9 @@ const Interface = () => {
         }
     }
 
-    useEffect(() => {
-        if (DEBUG) setShowCreateForm(true)
-    }, []);
+    // useEffect(() => {
+    //     if (DEBUG) setShowCreateForm(true)
+    // }, []);
 
     return (
         <div className="interface" ref={divRef}>

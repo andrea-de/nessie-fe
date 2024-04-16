@@ -32,6 +32,10 @@ const Provider = ({ children }) => {
     const [showAuthForm, setShowAuthForm] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+    useEffect(() => {
+        if (DEBUG) setUser({ email: "donnie@element.com", role: "normal", id: 1 })
+    }, [])
+
     const fetchMapData = async () => {
         try {
             const data = await getPolygons();
@@ -40,10 +44,6 @@ const Provider = ({ children }) => {
             console.error('Error fetching data:', error);
         }
     };
-
-    useEffect(() => {
-        if (DEBUG) setUser({ email: "donnie@element.com", role: "authorized", id: 1 })
-    }, [])
 
     // A selection can be a creation or edit. Refresh polygons after selection
     useEffect(() => {
