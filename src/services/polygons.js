@@ -28,7 +28,11 @@ export const createPolygon = async (polygon) => {
     return response;
 }
 
-export const updatePolygon = async () => {
-    const response = await postWithAuth(`${REACT_APP_BACKEND_URL}/api/polygon/###`);
+export const updatePolygon = async (polygon) => {
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/api/polygon/update`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(polygon),
+    });
     return response;
 }

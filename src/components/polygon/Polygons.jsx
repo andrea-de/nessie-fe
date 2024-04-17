@@ -3,12 +3,23 @@ import { Context } from '../../Context';
 import { updatePolygon } from '../../services/polygons';
 import './Polygons.css';
 
+const DEBUG = process.env.REACT_APP_DEBUG == 'TRUE' ?? false;
+
 const Polygons = () => {
     const { polygons, setPolygons, selectedPolygon, setSelectedPolygon, user } = useContext(Context);
 
     const handleSave = async (e) => {
         e.preventDefault();
-        // Persist change
+        const response = await updatePolygon(selectedPolygon);
+        if (!response.ok) {
+            // Add some success toast
+            console.log((await response.json()).error);
+        }
+        else {
+            console.log("success");
+            // Add some fail toast
+        }
+        // setSelectedPolygon(null)
     }
 
     const handleCancel = async (e) => {
@@ -70,6 +81,8 @@ const Polygons = () => {
                                             </div>
                                         </form>
                                     )}
+                                    {DEBUG && selectedPolygon.pending == 'update'}(<>{JSON.stringify(selectedPolygon)}</>)
+                                    }
                                     {selectedPolygon.pending == 'update' &&
                                         (user?.role == 'authorized' || user?.id == polygon.created_by) &&
                                         (

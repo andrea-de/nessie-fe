@@ -42,7 +42,6 @@ const Map = () => {
     }
 
     const zoomToCoordinates = (coordinates) => {
-        console.log('map: ', map);
         if (map) {
             const bounds = new mapboxgl.LngLatBounds();
             coordinates.forEach((coord) => {
@@ -114,7 +113,6 @@ const Map = () => {
 
     // On polygon state chance
     useEffect(() => {
-        // console.log('polygon state changed:', polygons);
         if (polygons.length && drawRef.current) {
             const featureCollection = polygons.map(polygon => createMapboxFeature(polygon));
             drawRef.current.set({ type: 'FeatureCollection', features: featureCollection });
