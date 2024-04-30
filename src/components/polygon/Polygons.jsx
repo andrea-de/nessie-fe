@@ -81,7 +81,7 @@ const Polygons = () => {
                                             </div>
                                         </form>
                                     )}
-                                    {DEBUG && selectedPolygon.pending == 'update'}(<>{JSON.stringify(selectedPolygon)}</>)
+                                    {/* {DEBUG && selectedPolygon.pending == 'update'}(<>{JSON.stringify(selectedPolygon)}</>) */}
                                     }
                                     {selectedPolygon.pending == 'update' &&
                                         (user?.role == 'authorized' || user?.id == polygon.created_by) &&
