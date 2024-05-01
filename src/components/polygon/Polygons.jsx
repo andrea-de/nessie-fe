@@ -16,7 +16,7 @@ const Polygons = () => {
             console.log((await response.json()).error);
         }
         else {
-            console.log("success");
+            // console.log("success");
             // Add some fail toast
         }
         setSelectedPolygon(null)

@@ -42,8 +42,8 @@ const Map = () => {
                     userRef.current.id.toString() != e.features[0].properties.created_by)
             ) drawRef.current.changeMode('simple_select'); // undo selection
         } else if (selectedPolygon && selectedPolygon.pending) setSelectedPolygon(null); // reset before changing selection
-        console.log('selectedPolygon: ', selectedPolygon);
-        console.log('selectedPolygon?.pending: ', selectedPolygon?.pending);
+        // console.log('selectedPolygon: ', selectedPolygon);
+        // console.log('selectedPolygon?.pending: ', selectedPolygon?.pending);
     }
 
     const zoomToCoordinates = (coordinates) => {
