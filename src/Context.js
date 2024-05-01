@@ -33,7 +33,8 @@ const Provider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        if (DEBUG) setUser({ email: "donnie@element.com", role: "normal", id: 1 })
+        // if (DEBUG) setUser({ email: "donnie@element.com", role: "authorized", id: 1 })
+        if (DEBUG) setUser({ email: "donnie@element.com", role: "default", id: 1 })
     }, [])
 
     const fetchMapData = async () => {
@@ -49,6 +50,11 @@ const Provider = ({ children }) => {
     useEffect(() => {
         if (selectedPolygon == null) fetchMapData();
     }, [selectedPolygon]);
+    
+    // Refresh polygons after polygon list is nulled
+    useEffect(() => {
+        if (!polygons) fetchMapData();
+    }, [polygons]);
 
     return (
         <Context.Provider value={{

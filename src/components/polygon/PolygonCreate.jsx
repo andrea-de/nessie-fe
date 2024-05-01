@@ -65,13 +65,13 @@ const PolygonCreate = ({ onClose }) => {
                     onChange={(e) => setName(e.target.value)}
                 />
             </div>
-            <div>
+            {/* <div>
                 <label htmlFor="note">Note:</label>
                 <textarea
                     id="note"
                     onChange={(e) => setNote(e.target.value)}
                 />
-            </div>
+            </div> */}
             <div className="buttons">
                 <button type="button" onClick={onClose}>Cancel</button>
                 {newPolygon && !newPolygon.coordinates && !drawingMode && (

@@ -29,6 +29,7 @@ export const createPolygon = async (polygon) => {
 }
 
 export const updatePolygon = async (polygon) => {
+    if (polygon.addNote) polygon.notes = polygon.addNote
     const response = await fetch(`${REACT_APP_BACKEND_URL}/api/polygon/update`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },

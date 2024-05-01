@@ -3,7 +3,7 @@ import { Context } from '../../Context';
 import { updatePolygon } from '../../services/polygons';
 import './Polygons.css';
 
-const DEBUG = process.env.REACT_APP_DEBUG == 'TRUE' ?? false;
+const DEBUG = process.env.REACT_APP_DEBUG === 'TRUE' ?? false;
 
 const Polygons = () => {
     const { polygons, setPolygons, selectedPolygon, setSelectedPolygon, user } = useContext(Context);
@@ -19,7 +19,7 @@ const Polygons = () => {
             console.log("success");
             // Add some fail toast
         }
-        // setSelectedPolygon(null)
+        setSelectedPolygon(null)
     }
 
     const handleCancel = async (e) => {
@@ -32,7 +32,7 @@ const Polygons = () => {
         <div className='sightings'>
             <h3>Sightings:</h3>
             <ul>
-                {JSON.stringify(polygons) != '{}' &&
+                {polygons && JSON.stringify(polygons) !== '{}' &&
                     polygons.map((polygon, index) => (
                         <li
                             key={index}
@@ -45,57 +45,64 @@ const Polygons = () => {
                                 onClick={() => setSelectedPolygon(polygon)}
                             >
                                 <span>{polygon.name}</span>
+                                {(user && user?.id == polygon.created_by) && <em className="createdBy">Your Submision</em>}
                             </div>
                             {selectedPolygon && selectedPolygon.id === polygon.id && (
                                 <div className="expanded">
-                                    <hr />
-                                    <div><span>Status:</span> <span>{polygon.status}</span></div>
-                                    <div><span>Notes:</span> <p className='notes'>{polygon.notes}</p></div>
-                                    {user && user.role === 'authorized' && (
-                                        <form className="polygonEdit">
+                                    {/* {(DEBUG === true) && (<>{JSON.stringify(selectedPolygon)}</>)} */}
+                                    {(user == null || user?.role !== 'authorized') && (
+                                        <>
                                             <hr />
-                                            <h4>Authorized Edit</h4>
-                                            <div>
+                                            <div><span>Status:</span> <span>{polygon.status}</span></div>
+                                        </>
+                                    )}
+                                    {/* <div><span>Notes:</span> <p className='notes' dangerouslySetInnerHTML={{ __html: polygon.notes.replace(/\n/g, '<br />') }} /></div> */}
+                                    {user && user.role === 'authorized' && (
+                                        <>
+                                            <hr />
+                                            <form className="polygonEdit">
+                                                {/* <hr /> */}
+                                                {/* <h4>Authorized Edit</h4> */}
+                                                {/* <div>
                                                 <label htmlFor="note">Add Note:</label>
                                                 <textarea
                                                     id="note"
-                                                    value={''}
                                                     onClick={(e) => { e.preventDefault() }}
-                                                    onChange={(e) => { }}
-                                                />
-                                            </div>
-                                            <div className="editStatus">
-                                                <div>
-                                                    <label htmlFor="status">Status:</label>
-                                                    <select
-                                                        name="status"
-                                                        id="status"
-                                                        value={polygon.status}
-                                                        onChange={(e) => { setSelectedPolygon({ ...selectedPolygon, pending: 'update' }) }}
-                                                    >
-                                                        <option value="active">Active</option>
-                                                        <option value="investigating">Investigating</option>
-                                                        <option value="archived">Archived</option>
-                                                    </select>
+                                                    onChange={(e) => { setSelectedPolygon({ ...selectedPolygon, addNote: selectedPolygon.notes + '\n' + e.target.value, pending: 'update' }) }}
+                                                >
+                                                </textarea>
+                                            </div> */}
+                                                <div className="editStatus">
+                                                    <div>
+                                                        <label htmlFor="status">Status:</label>
+                                                        <select
+                                                            name="status"
+                                                            id="status"
+                                                            value={polygon.status}
+                                                            onChange={(e) => { setSelectedPolygon({ ...selectedPolygon, pending: 'update', status: e.target.value }) }}
+                                                        >
+                                                            <option value="active">Active</option>
+                                                            <option value="investigating">Investigating</option>
+                                                            <option value="archived">Archived</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </form>
+                                            </form>
+                                        </>
                                     )}
-                                    {/* {DEBUG && selectedPolygon.pending == 'update'}(<>{JSON.stringify(selectedPolygon)}</>) */}
-                                    }
-                                    {selectedPolygon.pending == 'update' &&
-                                        (user?.role == 'authorized' || user?.id == polygon.created_by) &&
+                                    {selectedPolygon.pending === 'update' &&
+                                        (user?.role === 'authorized' || user?.id == polygon.created_by) &&
                                         (
                                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                                 <button
                                                     style={{ backgroundColor: 'firebrick' }}
                                                     onClick={handleCancel}
-                                                    disabled={selectedPolygon.pending != 'update' ?? true}>
+                                                    disabled={selectedPolygon.pending !== 'update' ?? true}>
                                                     Cancel
                                                 </button>
                                                 <button
                                                     onClick={handleSave}
-                                                    disabled={selectedPolygon.pending != 'update' ?? true}>
+                                                    disabled={selectedPolygon.pending !== 'update' ?? true}>
                                                     Save
                                                 </button>
                                             </div>
@@ -106,6 +113,10 @@ const Polygons = () => {
                     ))
                 }
             </ul>
+            <>
+                <span style={{ marginRight: '10px' }}>Hide Archived</span>
+                <input type="checkbox" onClick={(e) => { e.target.checked === true ? setPolygons(polygons.filter(polygon => polygon.status !== 'archived')) : setPolygons(null) }} />
+            </>
         </div>
     )
 }

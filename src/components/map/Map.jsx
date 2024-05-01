@@ -32,13 +32,18 @@ const Map = () => {
     const mapSelection = (e) => {
         // if polygon selected
         if (e.features.length > 0) {
+            const polygon = e.features[0];
+            if (selectedPolygon?.pending && (selectedPolygon.id != polygon.properties.id)) setSelectedPolygon(null); // reset before changing selection
+            setSelectedPolygon({ ...polygon.properties, coordinates: polygon.geometry.coordinates[0] });
             // and not a user
             if (!userRef.current ||
                 // or not creator or authorized user
                 (userRef.current.role != 'authorized' &&
                     userRef.current.id.toString() != e.features[0].properties.created_by)
             ) drawRef.current.changeMode('simple_select'); // undo selection
-        }
+        } else if (selectedPolygon && selectedPolygon.pending) setSelectedPolygon(null); // reset before changing selection
+        console.log('selectedPolygon: ', selectedPolygon);
+        console.log('selectedPolygon?.pending: ', selectedPolygon?.pending);
     }
 
     const zoomToCoordinates = (coordinates) => {
@@ -113,7 +118,7 @@ const Map = () => {
 
     // On polygon state chance
     useEffect(() => {
-        if (polygons.length && drawRef.current) {
+        if (polygons && polygons.length && drawRef.current) {
             const featureCollection = polygons.map(polygon => createMapboxFeature(polygon));
             drawRef.current.set({ type: 'FeatureCollection', features: featureCollection });
             return;
@@ -123,7 +128,9 @@ const Map = () => {
     // On selected polygon change
     const [lastSelectedId, setLastSelectedId] = useState(null);
     useEffect(() => {
+        // console.log('selectedPolygon: ', selectedPolygon);
         if (selectedPolygon?.coordinates && selectedPolygon.id != lastSelectedId) {
+            // console.log('hit');
             zoomToCoordinates(selectedPolygon.coordinates);
         }
         setLastSelectedId(selectedPolygon?.id)
